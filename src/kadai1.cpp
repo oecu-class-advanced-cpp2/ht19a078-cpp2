@@ -16,7 +16,14 @@
 /* -------------------------------------------------------------- */
 int nth_prime(unsigned int a, unsigned int d, unsigned int n);
 
-// ‘f””»’è
+/* --------------------------------------------------------------- */
+/*
+* IsPrime
+*
+* —^‚¦‚ç‚ê‚½³®” num‚ª‘f”‚Å‚ ‚é‚©bool’l‚Å•Ô‚·
+*
+*/
+/* -------------------------------------------------------------- */
 bool IsPrime(int num);
 
 int main() {
@@ -36,14 +43,12 @@ int main() {
 
 int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
 	int ans;  // n”Ô–Ú‚Ì‘f”
-	int ans_num = IsPrime(a);
-	unsigned int cur_num = a;  // n”Ô–Ú‚Ì”
+	int ans_num = IsPrime(a);  // ‰€‚ª‘f”‚©”»•Ê
+	unsigned int cur_num = a;  // ”—ñ‚Ìn”Ô–Ú‚Ì”
 
 	while (CPP2_PRIME_UPPER_LIMIT != ans_num && n != ans_num) {
 		cur_num += d;
-		if (IsPrime(cur_num)) {
-			ans_num++;
-		}
+		ans_num+=IsPrime(cur_num);
 	}
 	ans = cur_num;
 	return ans;
@@ -55,7 +60,7 @@ bool IsPrime(int num)
 	else if (num == 2) return true;
 	else if (num % 2 == 0) return false; // ‹ô”‚Í‚ ‚ç‚©‚¶‚ßœ‚­
 
-	double sqrtNum = sqrt(num);
+	double sqrtNum = sqrt(num);  // ‡¬”num‚Íp…ãnum‚ğ–‚½‚·‘fˆöqp‚ğ‚à‚Â
 	for (int i = 3; i <= sqrtNum; i += 2)
 	{
 		if (num % i == 0)
