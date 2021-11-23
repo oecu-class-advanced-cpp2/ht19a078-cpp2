@@ -9,7 +9,71 @@ namespace cpp2 {
 	*/
 	/* --------------------------------------------------------------------- */
 	class mcxi {
+	private:
+		int x;
+		std::string str;
+	public:
+		mcxi(std::string m = "") {
+			str = m;
+			int a = 1;  // ŒW”
+			int ans = 0;  // \i”
+			for (int i = 0; i < m.length(); i++) {
+				char y = m.at(i);
+				switch (y)
+				{
+				case 'm':
+					ans += a * 1000;
+					a = 1;
+					break;
+				case 'c':
+					ans += a * 100;
+					a = 1;
+					break;
+				case'x':
+					ans += a * 10;
+					a = 1;
+					break;
+				case 'i':
+					ans += a;
+					a = 1;
+					break;
+				default:
+					a = y;
+					break;
+				}
+			}
+			x = ans;
+		}
 
+		std::string to_string() {
+			std::string num = std::to_string(x);
+			std::string ans = "";
+			int d = num.length();
+			for (int i = 0; i < d; i++) {
+				char b;
+				char a = num.at(d - i - 1);
+				if (i == 0)
+					b = 'i';
+				else if (i == 1)
+					b = 'x';
+				else if (i == 2)
+					b = 'c';
+				else if (i == 3)
+					b = 'm';
+
+				if (a != '1' || a != '0') {
+
+				}
+			}
+			return str;
+		}
+
+		mcxi operator +(mcxi r)
+		{
+			mcxi tc;
+			tc.x = this->x + r.x;
+			return tc;
+		}
 	};
 } // namespace cpp2
 int main() {
@@ -25,8 +89,7 @@ int main() {
 	cpp2::mcxi b2("4c8x8i");
 	cpp2::mcxi result2 = a2 + b2;
 	std::cout << "6cx" << " " << result2.to_string() << std::endl;
-	3
-		cpp2::mcxi a3("m2ci");
+	cpp2::mcxi a3("m2ci");
 	cpp2::mcxi b3("4m7c9x8i");
 	cpp2::mcxi result3 = a3 + b3;
 	std::cout << "5m9c9x9i" << " " << result3.to_string() << std::endl;
