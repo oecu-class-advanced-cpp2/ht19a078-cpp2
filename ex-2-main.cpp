@@ -38,7 +38,7 @@ namespace cpp2 {
 					a = 1;
 					break;
 				default:
-					a = y;
+					a = y-'0';
 					break;
 				}
 			}
@@ -46,25 +46,35 @@ namespace cpp2 {
 		}
 
 		std::string to_string() {
+			if (str != "") {
+				return str;
+			}
 			std::string num = std::to_string(x);
 			std::string ans = "";
 			int d = num.length();
 			for (int i = 0; i < d; i++) {
-				char b;
-				char a = num.at(d - i - 1);
+				std::string b;
+				std::string a = std::string() + num.at(d - i - 1);
 				if (i == 0)
-					b = 'i';
+					b = "i";
 				else if (i == 1)
-					b = 'x';
+					b = "x";
 				else if (i == 2)
-					b = 'c';
+					b = "c";
 				else if (i == 3)
-					b = 'm';
+					b = "m";
 
-				if (a != '1' || a != '0') {
-
+				if (a == "1") {
+					ans.insert(0, b);
+				}
+				else if (a == "0") {
+					// ‰½‚à‚µ‚È‚¢
+				}
+				else {
+					ans.insert(0, a + b);
 				}
 			}
+			str = ans;
 			return str;
 		}
 
