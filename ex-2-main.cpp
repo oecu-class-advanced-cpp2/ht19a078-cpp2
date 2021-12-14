@@ -10,7 +10,7 @@ namespace cpp2 {
 	/* --------------------------------------------------------------------- */
 	class mcxi {
 	private:
-		int x;
+		int value_;
 		std::string str;
 	public:
 		mcxi(std::string m = "") {
@@ -38,34 +38,34 @@ namespace cpp2 {
 					a = 1;
 					break;
 				default:
-					a = y-'0';
+					a = y - '0';
 					break;
 				}
 			}
-			x = ans;
+			value_ = ans;
 		}
 
 		std::string to_string() {
 			if (str != "") {
 				return str;
 			}
-			std::string num = std::to_string(x);
+			std::string num = std::to_string(value_);
 			std::string ans = "";
 			int d = num.length();
 			for (int i = 0; i < d; i++) {
 				std::string b;
 				std::string a = std::string() + num.at(d - i - 1);
 				if (i == 0)
-					b = "i";
+					b = "i";  // ˆê‚ÌˆÊ
 				else if (i == 1)
-					b = "x";
+					b = "x";  // \‚ÌˆÊ
 				else if (i == 2)
-					b = "c";
+					b = "c";  // •S‚ÌˆÊ
 				else if (i == 3)
-					b = "m";
+					b = "m";  // ç‚ÌˆÊ
 
 				if (a == "1") {
-					ans.insert(0, b);
+					ans.insert(0, b);  // ˆê‚È‚çŒW”‚Í•s—v
 				}
 				else if (a == "0") {
 					// ‰½‚à‚µ‚È‚¢
@@ -81,7 +81,7 @@ namespace cpp2 {
 		mcxi operator +(mcxi r)
 		{
 			mcxi tc;
-			tc.x = this->x + r.x;
+			tc.value_ = this->value_ + r.value_;  // ”’l“¯m‚ğŒvZ
 			return tc;
 		}
 	};
