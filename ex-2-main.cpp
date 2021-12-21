@@ -78,10 +78,10 @@ namespace cpp2 {
 			return str;
 		}
 
-		mcxi operator +(mcxi r)
+		mcxi operator +(mcxi rhs)
 		{
 			mcxi tc;
-			tc.value_ = this->value_ + r.value_;  // ”’l“¯m‚ğŒvZ
+			tc.value_ = this->value_ + rhs.value_;  // ”’l“¯m‚ğŒvZ
 			return tc;
 		}
 	};
