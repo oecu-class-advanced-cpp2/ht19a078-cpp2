@@ -14,41 +14,72 @@ namespace cpp2 {
 		std::string str;
 	public:
 		mcxi(std::string m = "") {
-			str = m;
 			int a = 1;  // 係数
 			int ans = 0;  // 十進数
+			bool ch = false;  // mcxi文字列以外が存在するかチェック
+			bool once[4] = { true,true,true,true };
+			bool E = true;
 			for (int i = 0; i < m.length(); i++) {
 				char y = m.at(i);
 				switch (y)
 				{
 				case 'm':
-					ans += a * 1000;
-					a = 1;
+					if (once[0]) {
+						ans += a * 1000;
+						a = 1;
+						ch = true;
+						once[0] = false;
+					}
 					break;
 				case 'c':
-					ans += a * 100;
-					a = 1;
+					if (once[1]) {
+						ans += a * 100;
+						a = 1;
+						ch = true;
+						once[1] = false;
+					}
 					break;
 				case'x':
-					ans += a * 10;
-					a = 1;
+					if (once[2]) {
+						ans += a * 10;
+						a = 1;
+						ch = true;
+						once[2] = false;
+					}
 					break;
 				case 'i':
-					ans += a;
-					a = 1;
+					if (once[3]) {
+						ans += a;
+						a = 1;
+						ch = true;
+						once[3] = false;
+					}
 					break;
 				default:
 					a = y - '0';
+					for (int j = 0; j < 10; j++) {
+						if (a == j)
+							ch = true;
+					}
+					if (i == m.length() - 1) {
+						ch = false;
+					}
+					break;
+				}
+				if (ch)
+					ch = false;
+				else {
+					E = false;
 					break;
 				}
 			}
-			value_ = ans;
+			if (E)
+				value_ = ans;
+			else 
+				value_ = 0;
 		}
 
 		std::string to_string() {
-			if (str != "") {
-				return str;
-			}
 			std::string num = std::to_string(value_);
 			std::string ans = "";
 			int d = num.length();
@@ -86,45 +117,46 @@ namespace cpp2 {
 		}
 	};
 } // namespace cpp2
+
+void test() {
+	const int num = 15;  // データ数
+	//testdata[][0] 入力1
+	//testdata[][1] 入力2
+	//testdata[][2] 入力1と入力2の和
+	std::string testdata[num][3] = {
+		{"xi","x9i","3x"},
+		{"i","9i","x"},
+		{"c2x2i","4c8x8i","6cx" },
+		{"m2ci","4m7c9x8i","5m9c9x9i"},
+		{ "9c9x9i" ,"i","m"},
+		{ "i" ,"9m9c9x8i" ,"9m9c9x9i" },
+		{ "m" ,"i","mi"},
+		{"i","m","mi"},
+		{ "m9i" ,"i" ,"mx" },
+		{ "9m8c7xi" ,"c2x8i" ,"9m9c9x9i" },
+		{"abcd","efgh",""},
+		{"1234","9876",""},
+		{"mmcc","xxii",""},
+		{"mcxi","viabui","mcxi"},
+		{"iuoa","ixcm","mcxi"}
+	};
+
+	bool allcor = true;
+	for (int i = 0; i < num; i++) {
+		cpp2::mcxi a(testdata[i][0]);
+		cpp2::mcxi b(testdata[i][1]);
+		cpp2::mcxi result = a + b;
+		std::cout << testdata[i][2] << "," << result.to_string() << std::endl;
+		if (testdata[i][2] != result.to_string()) {
+			allcor = false;
+			std::cout << i + 1 << "：エラー" << std::endl;
+		}
+	}
+	if (allcor)
+		std::cout << "異常なし" << std::endl;
+}
+
 int main() {
-	cpp2::mcxi a0("xi");
-	cpp2::mcxi b0("x9i");
-	cpp2::mcxi result0 = a0 + b0;
-	std::cout << "3x" << " " << result0.to_string() << std::endl;
-	cpp2::mcxi a1("i");
-	cpp2::mcxi b1("9i");
-	cpp2::mcxi result1 = a1 + b1;
-	std::cout << "x" << " " << result1.to_string() << std::endl;
-	cpp2::mcxi a2("c2x2i");
-	cpp2::mcxi b2("4c8x8i");
-	cpp2::mcxi result2 = a2 + b2;
-	std::cout << "6cx" << " " << result2.to_string() << std::endl;
-	cpp2::mcxi a3("m2ci");
-	cpp2::mcxi b3("4m7c9x8i");
-	cpp2::mcxi result3 = a3 + b3;
-	std::cout << "5m9c9x9i" << " " << result3.to_string() << std::endl;
-	cpp2::mcxi a4("9c9x9i");
-	cpp2::mcxi b4("i");
-	cpp2::mcxi result4 = a4 + b4;
-	std::cout << "m" << " " << result4.to_string() << std::endl;
-	cpp2::mcxi a5("i");
-	cpp2::mcxi b5("9m9c9x8i");
-	cpp2::mcxi result5 = a5 + b5;
-	std::cout << "9m9c9x9i" << " " << result5.to_string() << std::endl;
-	cpp2::mcxi a6("m");
-	cpp2::mcxi b6("i");
-	cpp2::mcxi result6 = a6 + b6;
-	std::cout << "mi" << " " << result6.to_string() << std::endl;
-	cpp2::mcxi a7("i");
-	cpp2::mcxi b7("m");
-	cpp2::mcxi result7 = a7 + b7;
-	std::cout << "mi" << " " << result7.to_string() << std::endl;
-	cpp2::mcxi a8("m9i");
-	cpp2::mcxi b8("i");
-	cpp2::mcxi result8 = a8 + b8;
-	std::cout << "mx" << " " << result8.to_string() << std::endl;
-	cpp2::mcxi a9("9m8c7xi");
-	cpp2::mcxi b9("c2x8i");
-	cpp2::mcxi result9 = a9 + b9;
-	std::cout << "9m9c9x9i" << " " << result9.to_string() << std::endl;
+	test();
+	return 0;
 }
