@@ -17,7 +17,7 @@ namespace cpp2 {
 			int a = 1;  // 係数
 			int ans = 0;  // 十進数
 			bool ch = false;  // mcxi文字列以外が存在するかチェック
-			bool once[4] = { true,true,true,true };
+			bool once[5] = { true,true,true,true,true };
 			bool E = true;
 			for (int i = 0; i < m.length(); i++) {
 				char y = m.at(i);
@@ -29,6 +29,7 @@ namespace cpp2 {
 						a = 1;
 						ch = true;
 						once[0] = false;
+						once[4] = true;
 					}
 					break;
 				case 'c':
@@ -37,6 +38,7 @@ namespace cpp2 {
 						a = 1;
 						ch = true;
 						once[1] = false;
+						once[4] = true;
 					}
 					break;
 				case'x':
@@ -45,6 +47,7 @@ namespace cpp2 {
 						a = 1;
 						ch = true;
 						once[2] = false;
+						once[4] = true;
 					}
 					break;
 				case 'i':
@@ -53,16 +56,20 @@ namespace cpp2 {
 						a = 1;
 						ch = true;
 						once[3] = false;
+						once[4] = true;
 					}
 					break;
 				default:
-					a = y - '0';
-					for (int j = 0; j < 10; j++) {
-						if (a == j)
-							ch = true;
-					}
-					if (i == m.length() - 1) {
-						ch = false;
+					if (once[4]) {
+						a = y - '0';
+						for (int j = 0; j < 10; j++) {
+							if (a == j)
+								ch = true;
+						}
+						if (i == m.length() - 1) {
+							ch = false;
+						}
+						once[4] = false;
 					}
 					break;
 				}
@@ -73,10 +80,16 @@ namespace cpp2 {
 					break;
 				}
 			}
+			for (int i = 0; i < 4; i++) {
+				if (!once)
+					ch = false;
+			}
 			if (E)
 				value_ = ans;
-			else 
+			else {
 				value_ = 0;
+				std::cerr << "警告：" << m << std::endl;
+			}
 		}
 
 		std::string to_string() {
@@ -119,7 +132,7 @@ namespace cpp2 {
 } // namespace cpp2
 
 void test() {
-	const int num = 15;  // データ数
+	const int num = 19;  // データ数
 	//testdata[][0] 入力1
 	//testdata[][1] 入力2
 	//testdata[][2] 入力1と入力2の和
@@ -138,7 +151,11 @@ void test() {
 		{"1234","9876",""},
 		{"mmcc","xxii",""},
 		{"mcxi","viabui","mcxi"},
-		{"iuoa","ixcm","mcxi"}
+		{"iuoa","ixcm","mcxi"},
+		{"m1","",""},
+		{"1i","1i","2i"},
+		{"0m0c","0x0i",""},
+		{"","",""},
 	};
 
 	bool allcor = true;
